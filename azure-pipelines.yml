@@ -10,7 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 jobs: 
-- job: A
+- job: 
+  displayName: Build and install
   steps:
   - task: UseNode@1
     inputs:
@@ -23,10 +24,15 @@ jobs:
       npm run build
     displayName: 'npm install and build'
 
-
-
-- job: B
+- job: 
+  displayName: Publish Code Coverage
   steps:
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+      checkLatest: true
+    displayName: Use latest node version
+
   - script: |
       npm run test
     displayName: 'Run tests'
@@ -35,6 +41,16 @@ jobs:
       ls -la $(System.DefaultWorkingDirectory)/coverage
     displayName: 'List files inside coverage directory'
 
+  - task: PublishCodeCoverageResults@2
+    inputs:
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
+      failIfCoverageEmpty: true
+    displayName: 'Publish code coverage results'
+
+
+- job: 
+  displayName: Publish Sonar Quality
+  steps:
   - task: SonarCloudPrepare@4
     inputs:
       SonarQube: 'SonarCloud Connection'
@@ -53,11 +69,6 @@ jobs:
     inputs:
       pollingTimeoutSec: '300'
 
-  - task: PublishCodeCoverageResults@2
-    inputs:
-      summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
-      failIfCoverageEmpty: true
-    displayName: 'Publish code coverage results'
 
 
 
