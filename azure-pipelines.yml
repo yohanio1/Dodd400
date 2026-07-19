@@ -29,6 +29,24 @@ steps:
     ls -la $(System.DefaultWorkingDirectory)/coverage
   displayName: 'List files inside coverage directory'
 
+- task: SonarCloudPrepare@4
+  inputs:
+    SonarQube: 'SonarCloud Connection'
+    organization: 'frankdevops'
+    scannerMode: 'cli'
+    configMode: 'manual'
+    cliProjectKey: 'FrankDevOps_Dodd400.git'
+    cliProjectName: 'Dodd400.git'
+    cliSources: './src'
+
+- task: SonarCloudAnalyze@4
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
+- task: SonarCloudPublish@4
+  inputs:
+    pollingTimeoutSec: '300'
+
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
