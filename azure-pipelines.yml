@@ -26,7 +26,7 @@ jobs:
 
 
 
-- job: 
+- job: B
   displayName: Publish Code Coverage
   dependsOn: A
   steps:
@@ -47,9 +47,16 @@ jobs:
       failIfCoverageEmpty: true
     displayName: 'Publish code coverage results'
 
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)/coverage'
+      artifact: 'coverage_artifact'
+      publishLocation: 'pipeline'
+
 
 - job: 
-  displayName: Publish Sonar Quality
+  displayName: Publish Sonar results into SonarCloud
+  dependsOn: B
   steps:
   - task: SonarCloudPrepare@4
     inputs:
