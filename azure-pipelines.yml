@@ -76,6 +76,7 @@ jobs:
       cliProjectKey: 'FrankDevOps_Dodd400.git'
       cliProjectName: 'Dodd400.git'
       cliSources: './src'
+      extraProperties: 'sonar.cobertura.reportPaths=$(Pipeline.Workspace)/cobertura-coverage.xml'
 
   - task: SonarCloudAnalyze@4
     inputs:
