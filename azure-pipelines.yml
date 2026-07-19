@@ -49,7 +49,7 @@ jobs:
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(Pipeline.Workspace)/**/coverage'
+      targetPath: '$(System.DefaultWorkingDirectory)/coverage'
       artifact: 'coverage_artifact'
       publishLocation: 'pipeline'
 
