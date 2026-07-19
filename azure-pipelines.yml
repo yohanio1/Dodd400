@@ -9,49 +9,55 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: UseNode@1
-  inputs:
-    version: '20.x'
-    checkLatest: true
-  displayName: Use latest node version
+jobs: 
+- job: A
+  steps:
+  - task: UseNode@1
+    inputs:
+      version: '20.x'
+      checkLatest: true
+    displayName: Use latest node version
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'
 
-- script: |
-    npm run test
-  displayName: 'Run tests'
 
-- script: |
-    ls -la $(System.DefaultWorkingDirectory)/coverage
-  displayName: 'List files inside coverage directory'
 
-- task: SonarCloudPrepare@4
-  inputs:
-    SonarQube: 'SonarCloud Connection'
-    organization: 'frankdevops'
-    scannerMode: 'cli'
-    configMode: 'manual'
-    cliProjectKey: 'FrankDevOps_Dodd400.git'
-    cliProjectName: 'Dodd400.git'
-    cliSources: './src'
+- job: B
+  steps:
+  - script: |
+      npm run test
+    displayName: 'Run tests'
 
-- task: SonarCloudAnalyze@4
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
+  - script: |
+      ls -la $(System.DefaultWorkingDirectory)/coverage
+    displayName: 'List files inside coverage directory'
 
-- task: SonarCloudPublish@4
-  inputs:
-    pollingTimeoutSec: '300'
+  - task: SonarCloudPrepare@4
+    inputs:
+      SonarQube: 'SonarCloud Connection'
+      organization: 'frankdevops'
+      scannerMode: 'cli'
+      configMode: 'manual'
+      cliProjectKey: 'FrankDevOps_Dodd400.git'
+      cliProjectName: 'Dodd400.git'
+      cliSources: './src'
 
-- task: PublishCodeCoverageResults@2
-  inputs:
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
-    failIfCoverageEmpty: true
-  displayName: 'Publish code coverage results'
+  - task: SonarCloudAnalyze@4
+    inputs:
+      jdkversion: 'JAVA_HOME_17_X64'
+
+  - task: SonarCloudPublish@4
+    inputs:
+      pollingTimeoutSec: '300'
+
+  - task: PublishCodeCoverageResults@2
+    inputs:
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
+      failIfCoverageEmpty: true
+    displayName: 'Publish code coverage results'
 
 
 
