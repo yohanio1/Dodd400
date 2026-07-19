@@ -58,6 +58,15 @@ jobs:
   displayName: Publish Sonar results into SonarCloud
   dependsOn: B
   steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      buildType: 'current'
+      artifactName: 'coverage_artifact'
+      targetPath: '$(Pipeline.Workspace)'
+
+  - script: |
+      ls -la $(Pipeline.Workspace)
+    displayName: List artifacts of the pipeline workspace
   - task: SonarCloudPrepare@4
     inputs:
       SonarQube: 'SonarCloud Connection'
@@ -75,6 +84,8 @@ jobs:
   - task: SonarCloudPublish@4
     inputs:
       pollingTimeoutSec: '300'
+
+
 
 
 
