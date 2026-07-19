@@ -65,7 +65,7 @@ jobs:
       targetPath: '$(Pipeline.Workspace)'
 
   - script: |
-      ls -la $(Pipeline.Workspace)
+      ls -la $(Pipeline.Workspace)/coverage
     displayName: List artifacts of the pipeline workspace
   - task: SonarCloudPrepare@4
     inputs:
@@ -76,7 +76,7 @@ jobs:
       cliProjectKey: 'FrankDevOps_Dodd400.git'
       cliProjectName: 'Dodd400.git'
       cliSources: './src'
-      extraProperties: 'sonar.cobertura.reportPaths=$(Pipeline.Workspace)/coverage_artifact/cobertura-coverage.xml'
+      extraProperties: 'sonar.cobertura.reportPaths=$(Pipeline.Workspace)/coverage/cobertura-coverage.xml'
 
   - task: SonarCloudAnalyze@4
     inputs:
