@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 jobs: 
-- job: 
+- job: A
   displayName: Build and install
   steps:
   - task: UseNode@1
@@ -26,6 +26,7 @@ jobs:
 
 - job: 
   displayName: Publish Code Coverage
+  dependsOn: A
   steps:
   - task: UseNode@1
     inputs:
