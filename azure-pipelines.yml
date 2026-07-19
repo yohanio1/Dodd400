@@ -24,6 +24,8 @@ jobs:
       npm run build
     displayName: 'npm install and build'
 
+
+
 - job: 
   displayName: Publish Code Coverage
   dependsOn: A
@@ -33,14 +35,11 @@ jobs:
       version: '20.x'
       checkLatest: true
     displayName: Use latest node version
-
+  
   - script: |
+      npm install
       npm run test
-    displayName: 'Run tests'
-
-  - script: |
-      ls -la $(System.DefaultWorkingDirectory)/coverage
-    displayName: 'List files inside coverage directory'
+    displayName: 'npm install and run tests'
 
   - task: PublishCodeCoverageResults@2
     inputs:
