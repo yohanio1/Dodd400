@@ -33,6 +33,7 @@ steps:
   inputs:
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
     failIfCoverageEmpty: true
+  displayName: 'Publish code coverage results'
 
 
 
