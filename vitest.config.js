@@ -9,6 +9,8 @@ export default defineConfig({
       enabled: true,
       provider: 'v8',
       include: ['src/**/*.{js,jsx}'],
+      reporter: ["text", "cobertura"],
+      reportsDirectory: "./coverage"  
     }
   }
 });
