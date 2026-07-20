@@ -6,5 +6,6 @@ describe("NotFoundPage", () => {
     it("should render NotFoundPage with not found message", () => {
         render(<NotFoundPage />)
         expect(screen.getByText("La página que buscas no existe.")).toBeInTheDocument()
+        expect(screen.getByText("Volver al inicio")).toBeInTheDocument()
     })
 })
