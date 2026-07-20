@@ -49,7 +49,7 @@ jobs:
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: '$(System.DefaultWorkingDirectory)/coverage'
+      targetPath: '$(System.DefaultWorkingDirectory)/coverage/lcov.info'
       artifact: 'coverage_artifact'
       publishLocation: 'pipeline'
 
