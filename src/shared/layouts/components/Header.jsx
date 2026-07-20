@@ -18,8 +18,8 @@ export function Header() {
         </div>
         {/* Actions */}
         <div className="nav__actions">
-          <button>
-            <i class="fa-solid fa-user"></i>
+          <button type="button">
+            <i className="fa-solid fa-user"></i>
           </button>
         </div>
       </nav>
